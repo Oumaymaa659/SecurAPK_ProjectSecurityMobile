@@ -1,0 +1,30 @@
+name: SecurAPK Security Scan
+
+on:
+  pull_request:
+    paths:
+      - '*.apk'
+      - 'app/build/outputs/apk/**/*.apk'
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+      
+      - name: Download SecurAPK CLI
+        run: |
+          curl -o cli.py https://raw.githubusercontent.com/tonrepo/SecurAPK/main/cli.py
+      
+      - name: Run SecurAPK scan
+        run: |
+          python cli.py app/build/outputs/apk/debug/app-debug.apk --fail-on 70

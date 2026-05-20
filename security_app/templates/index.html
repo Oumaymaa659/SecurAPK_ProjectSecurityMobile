@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecurAPK - Analyseur de sécurité mobile</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #FDF8F0; margin: 0; padding: 20px; }
+        .container { max-width: 1300px; margin: auto; background: white; border-radius: 24px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        h1 { color: #A67C52; font-size: 2rem; margin-top: 0; }
+        .upload-card { background: #FEF7E8; border: 2px dashed #D4C4A8; border-radius: 20px; padding: 30px; text-align: center; margin: 20px 0; cursor: pointer; transition: 0.2s; }
+        .upload-card:hover { background: #FBEFD9; border-color: #A67C52; }
+        .upload-card.has-file { border-color: #9C9A6B; background: #F5EEDC; }
+        #fileInput { display: none; }
+        .file-name { margin-top: 15px; font-size: 0.9rem; color: #5C4033; background: #E6D5B8; display: inline-block; padding: 5px 12px; border-radius: 40px; }
+        .badge { display: inline-block; padding: 6px 16px; border-radius: 40px; color: white; font-weight: bold; margin-right: 12px; }
+        .critique { background-color: #E07A5F; }
+        .majeur { background-color: #F4A261; }
+        .mineur { background-color: #9C9A6B; }
+        .summary { display: flex; gap: 16px; margin: 30px 0; flex-wrap: wrap; }
+        .summary-item { background: #FDF5E6; border-radius: 32px; padding: 12px 24px; font-size: 1.2rem; }
+        button { background-color: #E6D5B8; border: none; border-radius: 40px; padding: 12px 28px; font-size: 1rem; font-weight: bold; color: #5C4033; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        button:hover { background-color: #D4C4A8; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+        th, td { border: 1px solid #F0E0C0; padding: 10px; text-align: left; vertical-align: top; }
+        th { background-color: #FAF0E1; color: #5C4033; }
+        tr:nth-child(even) { background-color: #FEFCF8; }
+        .loading { display: none; text-align: center; padding: 20px; font-style: italic; color: #A67C52; }
+        .error { color: #E07A5F; background: #FEE; padding: 12px; border-radius: 20px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔍 SecurAPK – Analyse de sécurité mobile</h1>
+    <p>Téléchargez une APK pour détecter les vulnérabilités cryptographiques et obtenir des correctifs.</p>
+
+    <div class="upload-card" id="dropZone">
+        📂 Glissez-déposez votre fichier APK ici ou cliquez pour sélectionner<br>
+        <small>Formats supportés : .apk</small>
+        <input type="file" id="fileInput" accept=".apk">
+        <div id="fileNameDisplay" class="file-name" style="display: none;"></div>
+    </div>
+    <button id="analyzeBtn" disabled>Démarrer l'analyse</button>
+    <div id="loading" class="loading">⏳ Analyse en cours, cela peut prendre 1-2 minutes...</div>
+    <div id="results"></div>
+</div>
+
+<script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const loadingDiv = document.getElementById('loading');
+    const resultsDiv = document.getElementById('results');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    let selectedFile = null;
+
+    function updateFileUI() {
+        if (selectedFile) {
+            fileNameDisplay.textContent = `✅ Fichier : ${selectedFile.name}`;
+            fileNameDisplay.style.display = 'inline-block';
+            dropZone.classList.add('has-file');
+            analyzeBtn.disabled = false;
+        } else {
+            fileNameDisplay.style.display = 'none';
+            dropZone.classList.remove('has-file');
+            analyzeBtn.disabled = true;
+        }
+    }
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = '#A67C52'; });
+    dropZone.addEventListener('dragleave', () => dropZone.style.borderColor = '#D4C4A8');
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#D4C4A8';
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].name.endsWith('.apk')) {
+            selectedFile = files[0];
+            fileInput.files = files; // synchronise l'input
+            updateFileUI();
+        } else {
+            alert("Veuillez déposer un fichier .apk");
+        }
+    });
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            selectedFile = e.target.files[0];
+            updateFileUI();
+        } else {
+            selectedFile = null;
+            updateFileUI();
+        }
+    });
+
+    analyzeBtn.onclick = async () => {
+        if (!selectedFile) { alert("Veuillez sélectionner une APK."); return; }
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        loadingDiv.style.display = 'block';
+        resultsDiv.innerHTML = '';
+        analyzeBtn.disabled = true;
+        try {
+            const resp = await fetch('/analyze', { method: 'POST', body: formData });
+            const data = await resp.json();
+            if (data.error) throw new Error(data.error);
+            displayResults(data);
+        } catch (err) {
+            resultsDiv.innerHTML = `<div class="error">❌ Erreur : ${err.message}</div>`;
+        } finally {
+            loadingDiv.style.display = 'none';
+            analyzeBtn.disabled = false;
+        }
+    };
+
+    function displayResults(data) {
+        const sum = data.summary;
+        const issues = data.issues || [];
+        let html = `<div class="summary">
+            <div class="summary-item"><span class="badge critique">Critiques</span> ${sum.critique}</div>
+            <div class="summary-item"><span class="badge majeur">Majeurs</span> ${sum.majeur}</div>
+            <div class="summary-item"><span class="badge mineur">Mineurs</span> ${sum.mineur}</div>
+        </div>`;
+        if (issues.length === 0) {
+            html += '<p>✅ Aucune vulnérabilité cryptographique détectée.</p>';
+        } else {
+            html += `<h3>📋 Détail des problèmes (${issues.length})</h3>
+            <table>
+                <thead><tr><th>Fichier</th><th>Ligne</th><th>Type</th><th>Gravité</th><th>Explication</th><th>Correction suggérée</th></tr>
+                </thead><tbody>`;
+            for (let issue of issues) {
+                html += `<tr>
+                    <td>${escapeHtml(issue.fichier)}</td>
+                    <td>${issue.ligne}</td>
+                    <td>${escapeHtml(issue.type)}</td>
+                    <td><span class="badge ${issue.gravite}">${issue.gravite}</span></td>
+                    <td>${escapeHtml(issue.explication)}</td>
+                    <td>${escapeHtml(issue.patch)}</td>
+                </tr>`;
+            }
+            html += `</tbody></table>`;
+        }
+        resultsDiv.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+</script>
+</body>
+</html>

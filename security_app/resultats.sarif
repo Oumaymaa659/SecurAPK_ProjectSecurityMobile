@@ -1,0 +1,224 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "SecurAPK",
+          "version": "1.0"
+        }
+      },
+      "results": [
+        {
+          "ruleId": "AES_CBC_sans_auth",
+          "level": "warning",
+          "message": {
+            "text": "CBC sans int\u00e9grit\u00e9 permet des modifications du texte chiffr\u00e9."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "CryptoClass.java"
+                },
+                "region": {
+                  "startLine": 28
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "AES_CBC_sans_auth",
+          "level": "warning",
+          "message": {
+            "text": "CBC sans int\u00e9grit\u00e9 permet des modifications du texte chiffr\u00e9."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "CryptoClass.java"
+                },
+                "region": {
+                  "startLine": 36
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "MD5",
+          "level": "warning",
+          "message": {
+            "text": "MD5 est un hachage cass\u00e9. Utiliser SHA-256."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zza.java"
+                },
+                "region": {
+                  "startLine": 116
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "SHA1",
+          "level": "warning",
+          "message": {
+            "text": "SHA1 n'est plus s\u00fbr. Utiliser SHA-256."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "InstanceID.java"
+                },
+                "region": {
+                  "startLine": 62
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "MD5",
+          "level": "warning",
+          "message": {
+            "text": "MD5 est un hachage cass\u00e9. Utiliser SHA-256."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zzak.java"
+                },
+                "region": {
+                  "startLine": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "AES_CBC_sans_auth",
+          "level": "warning",
+          "message": {
+            "text": "CBC sans int\u00e9grit\u00e9 permet des modifications du texte chiffr\u00e9."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zzar.java"
+                },
+                "region": {
+                  "startLine": 57
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "MD5",
+          "level": "warning",
+          "message": {
+            "text": "MD5 est un hachage cass\u00e9. Utiliser SHA-256."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zzbl.java"
+                },
+                "region": {
+                  "startLine": 19
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "MD5",
+          "level": "warning",
+          "message": {
+            "text": "MD5 est un hachage cass\u00e9. Utiliser SHA-256."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zzhl.java"
+                },
+                "region": {
+                  "startLine": 573
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "Injection Vulnerability",
+          "level": "error",
+          "message": {
+            "text": "Vuln\u00e9rabilit\u00e9 d\u00e9tect\u00e9e par IA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "NativeContentAdView.java"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "Security Risk",
+          "level": "warning",
+          "message": {
+            "text": "Vuln\u00e9rabilit\u00e9 d\u00e9tect\u00e9e par IA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "AdLoader.java"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "buffer overflow",
+          "level": "warning",
+          "message": {
+            "text": "Vuln\u00e9rabilit\u00e9 d\u00e9tect\u00e9e par IA."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "zzak.java"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
