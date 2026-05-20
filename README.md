@@ -151,13 +151,6 @@ python cli.py chemin/vers/votre_application.apk --fail-on 70 --sarif rapport.sar
 *   **💻 Lecture locale (sur votre PC)** : Vous pouvez ouvrir directement l'enregistrement d'écran local en cliquant sur ce lien : [Enregistrement de l'écran 2026-05-20 094838.mp4](file:///C:/Users/oumai/Videos/Enregistrements%20d'e%CC%81cran/Enregistrement%20de%20l'e%CC%81cran%202026-05-20%20094838.mp4).
 *   **🌐 Sur GitHub** : *(Lien en ligne à venir)*
 
-> [!NOTE]
-> La vidéo d'enregistrement fait environ **399 Mo**. Étant donné que GitHub restreint la taille des fichiers à **100 Mo** maximum par commit, il n'est pas possible de versionner directement la vidéo dans le dépôt Git. 
-> 
-> **Recommandation pour la mettre en ligne plus tard :**
-> 1. Téléversez la vidéo sur **YouTube** (en public ou non répertoriée) ou sur **Google Drive** / **OneDrive**.
-> 2. Alternativement, vous pouvez créer une **Release GitHub** dans votre dépôt et y téléverser la vidéo (les Releases acceptent des fichiers allant jusqu'à 2 Go).
-> 3. Remplacez ensuite le lien ci-dessus par l'URL finale.
 
 ---
 
