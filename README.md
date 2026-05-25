@@ -148,8 +148,7 @@ python cli.py chemin/vers/votre_application.apk --fail-on 70 --sarif rapport.sar
 
 ## 🎥 Vidéo de Démonstration
 
-*   **💻 Lecture locale (sur votre PC)** : Vous pouvez ouvrir directement l'enregistrement d'écran local en cliquant sur ce lien : [Enregistrement de l'écran 2026-05-20 094838.mp4](file:///C:/Users/oumai/Videos/Enregistrements%20d'e%CC%81cran/Enregistrement%20de%20l'e%CC%81cran%202026-05-20%20094838.mp4).
-*   **🌐 Sur GitHub** : *(Lien en ligne à venir)*
+
 
 
 ---
